@@ -20,16 +20,16 @@ const favBtn = document.getElementById("fav");
 // SONG DATA
 const songs = [
   {
-    title: "Song One",
-    artist: "Elethu",
-    src: "assets/songs/song1.mp3",
-    cover: "assets/covers/cover1.jpg"
+    title: "Amanxeba",
+    artist: "Sami Kay, Rox Roberson & Misokuhle",
+    src: "assets/songs/Sami Kay, Rox Roberson & Misokuhle - Amanxeba (Official Audio) - Awakened Regal.mp3",
+    cover: "assets/covers/Sami Kay, Rox Roberson & Misokuhle - Amanxeba (Official Audio) - Awakened Regal.jpg"
   },
   {
-    title: "Song Two",
-    artist: "Unknown Artist",
-    src: "assets/songs/song2.mp3",
-    cover: "assets/covers/cover2.jpg"
+    title: "Vele Yena",
+    artist: "Skyla Tylaa, Elaine, JAZZWRLD, Thukuthela, Solaariss",
+    src: "assets/songs/Skyla Tylaa, Elaine, JAZZWRLD, Thukuthela, Solaariss - Vele Uyena (Risk It All) (Official Audio) - SkylaTylaaVEVO.mp3",
+    cover: "assets/covers/Skyla Tylaa, Elaine, JAZZWRLD, Thukuthela, Solaariss - Vele Uyena (Risk It All) (Official Audio) - SkylaTylaaVEVO.jpg"
   },
   {
     title: "Song Three",
@@ -46,35 +46,39 @@ let isRepeat = false;
 let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 let history = JSON.parse(localStorage.getItem("history")) || [];
 
-// LOAD SONG
+// BUTTON STATE
+function updatePlayButton() {
+  playBtn.textContent = audio.paused ? "▶" : "⏸";
+}
+
+// LOAD SONG (with fade effect)
 function loadSong(song) {
-  title.textContent = song.title;
-  artist.textContent = song.artist;
-  audio.src = song.src;
-  cover.src = song.cover;
+  cover.classList.add("fade");
+
+  setTimeout(() => {
+    title.textContent = song.title;
+    artist.textContent = song.artist;
+    audio.src = song.src;
+    cover.src = song.cover;
+    cover.classList.remove("fade");
+  }, 200);
+
   highlightPlaylist();
 }
 
 // PLAY / PAUSE
 function playSong() {
   audio.play();
-  playBtn.textContent = "⏸";
-  cover.style.animationPlayState = "running";
   addToHistory(songs[songIndex]);
 }
 
 function pauseSong() {
   audio.pause();
-  playBtn.textContent = "▶";
-  cover.style.animationPlayState = "paused";
 }
 
 // NEXT / PREV
 function nextSong() {
-  songIndex = isShuffle
-    ? Math.floor(Math.random() * songs.length)
-    : (songIndex + 1) % songs.length;
-
+  songIndex = isShuffle ? Math.floor(Math.random() * songs.length) : (songIndex + 1) % songs.length;
   loadSong(songs[songIndex]);
   playSong();
 }
@@ -89,13 +93,11 @@ function prevSong() {
 songs.forEach((song, index) => {
   const li = document.createElement("li");
   li.textContent = `${song.title} - ${song.artist}`;
-
   li.addEventListener("click", () => {
     songIndex = index;
     loadSong(songs[songIndex]);
     playSong();
   });
-
   playlist.appendChild(li);
 });
 
@@ -107,31 +109,37 @@ function highlightPlaylist() {
 }
 
 // EVENTS
-playBtn.addEventListener("click", () =>
-  audio.paused ? playSong() : pauseSong()
-);
-
+playBtn.addEventListener("click", () => audio.paused ? playSong() : pauseSong());
 nextBtn.addEventListener("click", nextSong);
 prevBtn.addEventListener("click", prevSong);
 
 shuffleBtn.addEventListener("click", () => {
   isShuffle = !isShuffle;
-  shuffleBtn.style.color = isShuffle ? "#00ff88" : "#fff";
+  shuffleBtn.classList.toggle("active", isShuffle);
 });
 
 repeatBtn.addEventListener("click", () => {
   isRepeat = !isRepeat;
-  repeatBtn.style.color = isRepeat ? "#00ff88" : "#fff";
+  repeatBtn.classList.toggle("active", isRepeat);
 });
 
-audio.addEventListener("ended", () =>
-  isRepeat ? playSong() : nextSong()
-);
+audio.addEventListener("ended", () => isRepeat ? playSong() : nextSong());
+
+// SYNC UI WITH AUDIO EVENTS
+audio.addEventListener("play", () => {
+  updatePlayButton();
+  cover.style.animationPlayState = "running";
+});
+
+audio.addEventListener("pause", () => {
+  updatePlayButton();
+  cover.style.animationPlayState = "paused";
+});
 
 // TIME UPDATE
 audio.addEventListener("timeupdate", () => {
+  if (!audio.duration) return;
   progress.value = (audio.currentTime / audio.duration) * 100 || 0;
-
   currentTimeEl.textContent = formatTime(audio.currentTime);
   durationEl.textContent = formatTime(audio.duration);
 });
@@ -145,6 +153,7 @@ function formatTime(time) {
 
 // SEEK
 progress.addEventListener("input", () => {
+  if (!audio.duration) return;
   audio.currentTime = (progress.value / 100) * audio.duration;
 });
 
@@ -156,7 +165,6 @@ volume.addEventListener("input", () => {
 // FAVORITES
 favBtn.addEventListener("click", () => {
   const currentSong = songs[songIndex];
-
   if (!favorites.find(fav => fav.title === currentSong.title)) {
     favorites.push(currentSong);
     localStorage.setItem("favorites", JSON.stringify(favorites));
@@ -164,13 +172,11 @@ favBtn.addEventListener("click", () => {
   }
 });
 
-// HISTORY (NO DUPLICATES)
+// HISTORY
 function addToHistory(song) {
   history = history.filter(s => s.title !== song.title);
   history.unshift(song);
-
   if (history.length > 5) history.pop();
-
   localStorage.setItem("history", JSON.stringify(history));
   renderHistory();
 }
@@ -181,12 +187,10 @@ function renderFavorites() {
   favorites.forEach(song => {
     const li = document.createElement("li");
     li.textContent = song.title;
-
     li.addEventListener("click", () => {
       loadSong(song);
       playSong();
     });
-
     favoritesList.appendChild(li);
   });
 }
@@ -196,17 +200,20 @@ function renderHistory() {
   history.forEach(song => {
     const li = document.createElement("li");
     li.textContent = song.title;
-
     li.addEventListener("click", () => {
       loadSong(song);
       playSong();
     });
-
     historyList.appendChild(li);
   });
 }
 
 // INIT
-loadSong(songs[songIndex]);
+window.addEventListener("load", () => {
+  loadSong(songs[songIndex]);
+  // Uncomment if you want auto-play:
+  // playSong();
+});
+
 renderFavorites();
 renderHistory();
