@@ -1,0 +1,168 @@
+/* FONT IMPORT */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&display=swap');
+
+/* GLOBAL */
+body {
+  margin: 0;
+  font-family: 'Oswald', sans-serif;
+  background: #0b0b0f;
+  color: #fff;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 80px 20px;
+  background: linear-gradient(135deg, #121212, #1a1a2e);
+}
+
+.logo {
+  width: 90px;
+  margin-bottom: 10px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin: 10px 0;
+  letter-spacing: 2px;
+}
+
+.hero p {
+  color: #aaa;
+  margin-bottom: 20px;
+}
+
+/* BUTTON */
+button {
+  background: transparent;
+  color: #00ff88;
+  border: 2px solid #00ff88;
+  padding: 12px 28px;
+  font-size: 16px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: #00ff88;
+  color: #000;
+  transform: scale(1.05);
+}
+
+/* PLAYLIST SECTION */
+.playlists {
+  padding: 40px 20px;
+}
+
+.playlists h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2rem;
+}
+
+.playlist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 25px;
+}
+
+/* CARD */
+.card {
+  background: #141414;
+  padding: 15px;
+  border-radius: 15px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 0 transparent;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 255, 136, 0.2);
+}
+
+.card img {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.card h3 {
+  margin-top: 10px;
+  font-size: 1rem;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #777;
+}
+
+/* PLAYER */
+.player-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+
+.player-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #222;
+  padding-bottom: 10px;
+}
+
+.logo-small {
+  width: 40px;
+}
+
+/* ALBUM */
+.album-art {
+  width: 100%;
+  border-radius: 20px;
+  margin: 20px 0;
+  animation: spin 20s linear infinite paused;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* CONTROLS */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.controls button {
+  font-size: 18px;
+  border-radius: 50%;
+  padding: 12px;
+}
+
+/* SLIDERS */
+.sliders input {
+  width: 100%;
+  margin: 10px 0;
+}
+
+/* LISTS */
+#playlist li, #favorites li, #history li {
+  padding: 10px;
+  border-bottom: 1px solid #222;
+  transition: 0.2s;
+}
+
+#playlist li.active,
+#favorites li:hover,
+#history li:hover {
+  background: #00ff88;
+  color: #000;
+  border-radius: 5px;
+}
+
+/* ANIMATION */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

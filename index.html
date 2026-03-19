@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audora</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <img src="assets/logo.png" alt="Audora Logo" class="logo">
+    <h1>Audora</h1>
+    <p>Where sound becomes experience.</p>
+    <button id="start">Start Listening</button>
+  </header>
+
+  <!-- Playlist Preview -->
+  <section class="playlists">
+    <h2>Featured Playlists</h2>
+    <div class="playlist-grid">
+      <div class="card">
+        <img src="assets/covers/workout1.jpg" alt="Workout Mix Cover">
+        <h3>Workout Mix</h3>
+      </div>
+      <div class="card">
+        <img src="assets/covers/game1.jpg" alt="Game Day Hype Cover">
+        <h3>Game Day Hype</h3>
+      </div>
+      <div class="card">
+        <img src="assets/covers/cool1.jpg" alt="Cool Down Cover">
+        <h3>Cool Down Tracks</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 Audora by Elethu Cotyi</p>
+  </footer>
+
+  <script>
+    document.getElementById("start").addEventListener("click", () => {
+      document.body.classList.add("fade-out");
+      setTimeout(() => {
+        window.location.href = "player.html";
+      }, 500);
+    });
+  </script>
+</body>
+</html>
