@@ -1,11 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&display=swap');
 
+* {
+  box-sizing: border-box;
+}
+
 /* GLOBAL */
 body {
   margin: 0;
   font-family: 'Oswald', sans-serif;
   background: #0b0b0f;
   color: #fff;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* HERO */
@@ -175,4 +180,76 @@ footer {
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 768px) {
+
+  /* HERO */
+  .hero {
+    padding: 50px 20px;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  /* PLAYLIST GRID */
+  .playlist-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+
+  /* CARDS */
+  .card img {
+    width: 100%;
+  }
+
+  /* PLAYER */
+  .player-container {
+    padding: 15px;
+  }
+
+  .album-art {
+    border-radius: 15px;
+  }
+
+  /* CONTROLS */
+  .controls {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .controls button {
+    flex: 1;
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  /* SECONDARY CONTROLS */
+  .controls.secondary {
+    justify-content: center;
+  }
+
+  /* PROGRESS */
+  .progress-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  /* VOLUME */
+  .volume-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* LISTS */
+  #playlist li,
+  #favorites li,
+  #history li {
+    font-size: 14px;
+    padding: 8px;
+  }
 }
